@@ -43,14 +43,16 @@
 
 
 import os
+import streamlit as st
 from dotenv import load_dotenv
 from langchain.llms import OpenAI
 from langchain.agents import AgentType, initialize_agent, load_tools
 from langchain.callbacks import StreamlitCallbackHandler
-import streamlit as st
 
+# Initialize environment variables
 load_dotenv()
 
+# Initialize LLM
 llm = OpenAI(temperature=0, streaming=True, openai_api_key=os.getenv("OPENAI_API_KEY"))
 tools = load_tools(["ddg-search"])
 agent = initialize_agent(
@@ -60,12 +62,27 @@ agent = initialize_agent(
     # verbose=True
 )
 
+# Title
+st.title("Yazo Chat123")
+
+for message in st.session_state["messages"]:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Main logic
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+
 # try: "what are the names of the kids of the 44th president of america"
 # try: "top 3 largest shareholders of nvidia"
-if prompt := st.chat_input():
-    st.chat_message("user").write(prompt)
+if user_prompt := st.chat_input("Your prompt"):
+    st.session_state.messages.append({"role": "user", "content": user_prompt})
+    
+    st.chat_message("user").write(user_prompt)
     with st.chat_message("assistant"):
         st.write("🧠 thinking...")
         st_callback = StreamlitCallbackHandler(st.container())
-        response = agent.run(prompt, callbacks=[st_callback])
+        response = agent.run(user_prompt, callbacks=[st_callback])
         st.write(response)

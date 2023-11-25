@@ -7,6 +7,7 @@ RUN apt-get update \
 
 #RUN git clone https://github.com/francotrax/chat.git .
 
+COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY . .

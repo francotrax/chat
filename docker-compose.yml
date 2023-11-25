@@ -2,11 +2,11 @@ version: "3.8"
 services:
   # Streamlit chat
   app:
-    container_name: yazo-chat
+    container_name: chat
     build: .
     command: streamlit run app/main.py --server.port 8501
     volumes:
-      - ./:/usr/src/app
+      - .:/chat
     ports:
       - 8501:8501
     env_file:
