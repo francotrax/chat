@@ -2,11 +2,12 @@ version: "3.8"
 services:
   # Streamlit chat
   app:
+    image: streamlitchat:latest
     container_name: chat
     build: .
     command: streamlit run app/main.py --server.port 8501
     volumes:
-      - .:/app
+      - ./:/usr/src/app
     ports:
       - 8501:8501
     env_file:
