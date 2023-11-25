@@ -5,7 +5,7 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y git curl
 
-RUN git clone https://github.com/francotrax/chat.git .
+#RUN git clone https://github.com/francotrax/chat.git .
 
 RUN pip3 install -r requirements.txt
 
