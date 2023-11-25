@@ -63,7 +63,7 @@ agent = initialize_agent(
 )
 
 # Title
-st.title("Yazo Chat123")
+st.title("Yazo Chat")
 
 for message in st.session_state["messages"]:
     with st.chat_message(message["role"]):
